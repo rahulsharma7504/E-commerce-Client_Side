@@ -1,0 +1,40 @@
+.background-container {
+  background-color: #717bdb;
+  padding: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+hr {
+  border-top: 2px solid #ccc;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #6e6060;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 10px 20px;
+}
+
+.mb-2 {
+  margin-bottom: 20px !important;
+}

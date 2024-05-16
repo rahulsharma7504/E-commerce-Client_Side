@@ -1,12 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { AuthProvider } from './Context/Auth';
+import { SearchProvider } from './Context/Search'
+ReactDOM.render(
+    <AuthProvider>
+      <SearchProvider>
+      <App />
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+      </SearchProvider>
+    </AuthProvider>,
+  document.getElementById('root')
 );
-

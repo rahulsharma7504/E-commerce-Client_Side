@@ -1,0 +1,61 @@
+.manage-categories {
+  margin-top: 20px;
+}
+
+.add-category-form {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.add-category-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.add-category-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.manage-categories-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.manage-categories-table th,
+.manage-categories-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.category-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.delete-category-btn,
+.edit-category-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-category-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.edit-category-btn {
+  background-color: #007bff;
+  color: #fff;
+}

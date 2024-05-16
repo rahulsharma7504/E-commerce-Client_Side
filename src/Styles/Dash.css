@@ -1,0 +1,28 @@
+.tabs-list {
+  display: flex;
+  justify-content: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.tab {
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transition: all 0.9s ease;
+}
+
+.tab:hover {
+  background-color: #eaeaea;
+}
+
+.tab:focus {
+  outline: none;
+}
+
+.tab[aria-selected="true"] {
+  background-color: #ddd;
+}

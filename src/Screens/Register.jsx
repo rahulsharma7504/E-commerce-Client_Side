@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Container } from '@mui/material';
+import { NavLink , useNavigate } from 'react-router-dom'
+
+import axios from 'axios';
+
 import '../Styles/register.css'
 const RegisterForm = () => {
+const navigate=useNavigate()
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,10 +23,16 @@ const RegisterForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     // Add your registration logic here
-    console.log(formData);
+    const res=await axios.post('http://localhost:4000/user/register',{formData:formData});
+    if(res.data){
+      alert('User Registered successfully')
+      navigate('/login');
+      
+    }
+     
   };
 
   return (

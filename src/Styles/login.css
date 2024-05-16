@@ -7,10 +7,13 @@
   }
   
   .input-field {
+
     margin-bottom: 15px;
+    margin-top: 15px;
   }
   
   .login-button {
-    margin-top: 15px;
+    padding: auto;
+    margin:  15px;
   }
   

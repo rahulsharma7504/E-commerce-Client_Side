@@ -1,7 +1,10 @@
 .footer-container {
     background-color: #96bacf;
-    padding: 20px 0;
-    margin-top: 3rem;
+    padding: 10px;
+    width: 100%;
+    /* margin-top: 3rem; */
+    position:sticky;
+    bottom: 1px;
   }
   
   .footer-section {
@@ -10,11 +13,19 @@
   
   .footer-heading {
     margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333;
   }
   
   .footer-links {
     display: flex;
     flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin-right: 2px;
+    font-size: 14px;
   }
   
   .footer-link {
@@ -26,6 +37,7 @@
   
   .footer-contact {
     margin-top: 20px;
+    justify-content: center;
   }
   
   .footer-contact-item {
