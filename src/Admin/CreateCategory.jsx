@@ -68,7 +68,7 @@ const CreateCategory = () => {
         }
       }
     });
-  
+
     if (open.isConfirmed) {
       const editedName = open.value;
       try {
@@ -90,77 +90,86 @@ const CreateCategory = () => {
   };
 
   //delete category
-  const handleDelete=async(id)=>{
-try {
-  const res=await axios.delete(`http://localhost:4000/category/delete/${id}`)
-  getAllcategory()
-  Swal.fire({
-    icon:'success',
-    title: 'Category Deleted Successfully',
-    text: 'Category Deleted Successfully'
-  })
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:4000/category/delete/${id}`)
+      getAllcategory()
+      Swal.fire({
+        icon: 'success',
+        title: 'Category Deleted Successfully',
+        text: 'Category Deleted Successfully'
+      })
 
-  
-} catch (error) {
-  Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Something went wrong!'
-  })
-  
-}
+
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
+
+    }
   }
   return (
     <>
-      <h1>Manage Categories</h1>
-<div className="row d-flex manage-categories">
-  <div className="col-4">
-    <form onSubmit={handelAdd} className="add-category-form">
-      <input
-        type="text"
-        name="category"
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Add New Category"
-        className="add-category-input"
-      />
-      <button type="submit" className="btn btn-primary mt-2 p-3 add-category-btn">
-        Add Category
-      </button>
-    </form>
-  </div>
-</div>
-<hr />
-<table className="table manage-categories-table">
-  <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">Category Name</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {category.map((item, index) => (
-      <tr key={index} className="category-row">
-        <th scope="row">{index + 1}</th>
-        <td>{item.name}</td>
-        <td>
-          <button
-            className="btn btn-danger mx-2 delete-category-btn"
-            onClick={() => handleDelete(item._id)}
-          >
-            Delete
-          </button>
-          <button
-            className="btn btn-primary edit-category-btn"
-            onClick={() => handleOpenModal(item._id, setInputValue(item.name))}
-          >
-            EDIT
-          </button>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+      <div class="manage-categories-container">
+        <h1>Manage Categories</h1>
+        <div class="row d-flex manage-categories-section">
+          <div class="col-4 add-category-section">
+            <form onSubmit={handelAdd} class="add-category-form">
+              <input
+                type="text"
+                name="category"
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Add New Category"
+                class="add-category-input"
+              />
+              <button type="submit" class="btn btn-primary mt-2 p-3 add-category-btn">
+                Add Category
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="category-table-section">
+        <table class="table manage-categories-table">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {category.map((item, index) => (
+              <tr key={index} class="category-row">
+                <th scope="row">{index + 1}</th>
+                <td>{item.name}</td>
+                <td>
+                  <div className='edbtn'>
+
+                  <button
+                    class="btn btn-danger mx-2 delete-category-btn"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    class="btn btn-primary edit-category-btn"
+                    onClick={() => handleOpenModal(item._id, setInputValue(item.name))}
+                  >
+                    EDIT
+                  </button>
+                  </div>
+
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
     </>
   )
 }

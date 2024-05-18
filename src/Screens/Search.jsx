@@ -27,6 +27,9 @@ const navigate=useNavigate();
     }
   }
   
+  const handleMore=(id)=>{
+    navigate(`/details/${id}`);
+  }
 
   return (
     <>
@@ -47,6 +50,8 @@ const navigate=useNavigate();
                   <ShoppingCartIcon className="cart-icon" />
                 </Button>
               </Tooltip>
+              <Button variant='danger' onClick={()=>{handleMore(item._id)}}>More..</Button>
+
             </div>
           </div>
         </div>

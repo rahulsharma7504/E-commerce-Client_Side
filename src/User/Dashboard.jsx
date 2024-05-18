@@ -1,6 +1,8 @@
 import React from 'react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, background, } from '@chakra-ui/react'
 import '../Styles/Dash.css';
+import User from './User';
+import Orders from './Orders';
 const Dashboard = () => {
   return (
     <>
@@ -29,24 +31,5 @@ const Dashboard = () => {
 export default Dashboard
 
 
-const User=()=>{
-  return(
-    <div>
-      <h1>User</h1>
-    </div>
-    
-  )
- 
-}
 
 
-
-const Orders=()=>{
-
-  return(
-    <div>
-      <h1>Orders</h1>
-    </div>
-    
-  )
-}

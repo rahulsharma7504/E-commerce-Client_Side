@@ -6,9 +6,11 @@ import { Button, Tooltip } from '@mui/material';
 import axios from 'axios';
 import '../Styles/Home.css';
 import { Prices } from './Prices';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useCart } from '../Context/CartContext'
 
 const Layout = () => {
+  const { cart, setCart } = useCart();
   const navigate = useNavigate();
   const [category, setCategory] = useState([])
   const [product, setProduct] = useState([]);
@@ -92,14 +94,14 @@ const Layout = () => {
   };
 
 
-  const handleMore=(id)=>{
+  const handleMore = (id) => {
     navigate(`/details/${id}`);
   }
   return (
     <>
       <div className="container-filtter">
         <div className="row">
-          <div className="col-md-3 m-3">
+          <div className="col-sm-3 m-3">
             <h5>Filtter by Category</h5>
             {
               category.map((item, index) => {
@@ -157,12 +159,16 @@ const Layout = () => {
                           <p className="card-text">{item.description.substring(0, 20)}</p>
                           <p className="card-text">$ {item.price}</p>
                           <Tooltip title="Add to Cart" arrow>
-                            <Button>
-                              <ShoppingCartIcon />
-
+                            <Button onClick={() => {setCart([...cart,item])
+                              localStorage.setItem('cart', JSON.stringify([...cart,item]))
+                            }
+                          
+                          }>
+                                <ShoppingCartIcon />
                             </Button>
                           </Tooltip>
-                          <Button variant='danger' onClick={()=>{handleMore(item._id)}}>More..</Button>
+
+                          <Button variant='danger' onClick={() => { handleMore(item._id) }}>More..</Button>
 
                         </div>
                       </div>

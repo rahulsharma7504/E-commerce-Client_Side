@@ -9,7 +9,7 @@ const ProDetails = () => {
     const navigate=useNavigate();
     useEffect(()=>{
         getProduct()
-    },[])
+    },[id])
     const getProduct=async()=>{
         const res=await (await axios.get(`http://localhost:4000/product/single/${id}`)).data
 
@@ -24,6 +24,12 @@ const ProDetails = () => {
 
         }
     }
+
+
+    const handlesimilar=(id)=>{
+        navigate(`/details/${id}`)
+        // setproduct()
+    }
   return (
     <>
     <div class="container-fluid mt-5">
@@ -34,7 +40,7 @@ const ProDetails = () => {
             <div class="col-md-6">
                 <div class="product-info">
                     <h2>{product.name}</h2>
-                    <h3>${product.price}</h3>
+                    <h3>Price :${product.price}</h3>
                     <h3>Shipping : <strong>{product.shipping ? 'Available':'Un-Available'}</strong></h3>
                     <h3>Quantity : <strong>{product.quantity }</strong></h3>
                     <div class="product-options">
@@ -66,8 +72,8 @@ const ProDetails = () => {
                                 <div class="product-card">
                                     <img src={item.image}class="img-fluid" alt="3.0 OFF COURT LEATHER"/>
                                     <h3>{item.name}</h3>
-                                    <h4>${item.price}</h4>
-                                    <button class="btn btn-dark" onClick={()=>navigate(`/details/${item._id}`)}>View Details</button>
+                                    <h4>Price:${item.price}</h4>
+                                    <button class="btn btn-dark" onClick={()=>handlesimilar(item._id)}>View Details</button>
                                 </div>
                             </div>
                         )

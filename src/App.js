@@ -21,7 +21,8 @@ import Dashboard from './User/Dashboard';
 import UpdatePro from './Admin/UpdatePro';
 import Search from './Screens/Search';
 import ProDetails from './Screens/ProDetails';
-
+import Category from './Screens/Category';
+import Cart from './Screens/Cart';
 function App() {
   const { auth, setAuth } = useAuth();
 
@@ -36,6 +37,10 @@ function App() {
               <Route path="/search/:search" element={<Search />} />
               <Route path="/details/:id" element={<ProDetails />} />
               <Route path="/user/dashboard" element={<Dashboard />} />
+              <Route path="/categories/:id/:name" element={<Category/>} />
+              <Route path="/cart" element={<Cart/>} />
+
+
               {auth.user.role === 1 ? (
                 <>
                   <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -43,8 +48,6 @@ function App() {
                   
                 </>
               ) : null}
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contect />} />
             </>
           ) : (
             <>
