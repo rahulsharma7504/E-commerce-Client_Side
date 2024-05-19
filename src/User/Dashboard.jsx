@@ -9,17 +9,17 @@ const Dashboard = () => {
         <h4>Dashboard</h4>
         <Tabs>
       <TabList className="tabs-list">
+      <Tab className="tab">Orders</Tab>
         <Tab className="tab">Profile</Tab>
-        <Tab className="tab">Orders</Tab>
       </TabList>
       <hr style={{height:'3px'}}/>
 
       <TabPanels>
         <TabPanel>
-          <User />
+          <Orders />
         </TabPanel>
         <TabPanel>
-          <Orders />
+          <User />
         </TabPanel>
       </TabPanels>
     </Tabs>

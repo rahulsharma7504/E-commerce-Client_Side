@@ -26,3 +26,51 @@
 .tab[aria-selected="true"] {
   background-color: #ddd;
 }
+
+/* Reset some basic elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container styling */
+.register-container {
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Grid item styling for the form */
+.register-container .MuiGrid-item {
+  margin-bottom: 15px;
+}
+
+/* TextField styling */
+.register-container .MuiTextField-root {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+/* Button styling */
+.register-button {
+  background-color: #1976d2; /* Primary color */
+  color: #fff;
+  padding: 10px 0;
+  font-size: 16px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: #115293;
+}
+
+.TextField{
+  margin-top: 10px;
+  padding: 11px;
+  background-color: rgb(107, 47, 47);
+}

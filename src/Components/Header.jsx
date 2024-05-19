@@ -131,13 +131,17 @@ const Header = () => {
                   <NavLink to='/login' style={{ color: 'white' }} >
                     <Button color="inherit" onClick={logout}>Logout</Button>
                   </NavLink>
+                  <NavLink to='/cart'>
+
                   <IconButton color="inherit" aria-label="Cart">
                   <Badge badgeContent={cart.length} color="secondary">
 
-                    <ShoppingCartIcon onClick={()=>navigate('/cart')} />
+                    <ShoppingCartIcon/>
                     </Badge>
 
                   </IconButton>
+                  </NavLink>
+
                 </>
 
               ) : (

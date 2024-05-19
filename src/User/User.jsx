@@ -35,41 +35,41 @@ const User = () => {
     setFormData({ ...formData, [name]: value });
   };
 
- 
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  try {
-    // Update user data in the database
-    const res = await axios.put('http://localhost:4000/user/profile', { formData });
 
-    if (res.data) {
-      let user = JSON.parse(localStorage.getItem('auth'));
-      user.user = res.data.user;
-      localStorage.setItem('auth', JSON.stringify(user));
-      setAuth({ ...auth, user: res.data.user });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Update user data in the database
+      const res = await axios.put('http://localhost:4000/user/profile', { formData });
+
+      if (res.data) {
+        let user = JSON.parse(localStorage.getItem('auth'));
+        user.user = res.data.user;
+        localStorage.setItem('auth', JSON.stringify(user));
+        setAuth({ ...auth, user: res.data.user });
+
+        Swal.fire({
+          title: 'Profile Updated',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
 
       Swal.fire({
-        title: 'Profile Updated',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500,
+        title: 'Error',
+        text: 'Failed to update profile. Please try again later.',
+        icon: 'error',
+        showConfirmButton: true,
       });
     }
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    
-    Swal.fire({
-      title: 'Error',
-      text: 'Failed to update profile. Please try again later.',
-      icon: 'error',
-      showConfirmButton: true,
-    });
-  }
-};
+  };
 
-document.title='Profile'
+  document.title = 'Profile'
   return (
     <>
       <h1>User</h1>
@@ -78,6 +78,7 @@ document.title='Profile'
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+              className='TextField'
                 variant="outlined"
                 label="Name"
                 fullWidth
@@ -88,16 +89,19 @@ document.title='Profile'
             </Grid>
             <Grid item xs={12}>
               <TextField
+              className='TextField'
                 variant="outlined"
                 label="Email"
                 fullWidth
                 name="email"
                 value={formData.email}
+                onChange={handleChange}
                 disabled
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+              className='TextField'
                 variant="outlined"
                 label="Password"
                 type="password"
@@ -109,6 +113,7 @@ document.title='Profile'
             </Grid>
             <Grid item xs={12}>
               <TextField
+              className='TextField'
                 variant="outlined"
                 label="Phone"
                 fullWidth
@@ -119,6 +124,7 @@ document.title='Profile'
             </Grid>
             <Grid item xs={12}>
               <TextField
+              className='TextField'
                 variant="outlined"
                 label="Address"
                 fullWidth
@@ -129,7 +135,7 @@ document.title='Profile'
             </Grid>
             <Grid item xs={12}>
               <Button type="submit" variant="contained" color="primary" fullWidth className="register-button">
-                Register
+                Update
               </Button>
             </Grid>
           </Grid>

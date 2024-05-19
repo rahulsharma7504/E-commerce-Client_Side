@@ -5,7 +5,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom'
 import '../Styles/categories.css';
 import { Button, Tooltip } from '@mui/material';
+import { useCart } from '../Context/CartContext'
+
 const Category = () => {
+  const { cart, setCart } = useCart();
+
     const navigate = useNavigate();
 
     const { id, name } = useParams();
@@ -36,7 +40,8 @@ const Category = () => {
                             <p className="product-prices">$ {item.price}</p>
                             <div className="product-action">
                                 <Tooltip title="Add to Cart" arrow>
-                                    <Button>
+                                    <Button onClick={() => {setCart([...cart,item])
+                               localStorage.setItem('cart', JSON.stringify([...cart,item]))}}>
                                         <ShoppingCartIcon />
                                     </Button>
                                 </Tooltip>

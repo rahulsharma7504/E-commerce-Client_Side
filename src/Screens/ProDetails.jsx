@@ -2,7 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import '../Styles/singlePro.css';
 import { useNavigate, useParams } from 'react-router-dom'
+import { useCart } from '../Context/CartContext'
+
 const ProDetails = () => {
+  const { cart, setCart } = useCart();
+
     const {id}=useParams();
     const [product,setproduct]=useState([]);
     const [similar,setsimilar]=useState([])
@@ -55,7 +59,8 @@ const ProDetails = () => {
                         </div>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-dark">Add to Cart</button>
+                        <button class="btn btn-dark" onClick={() => {setCart([...cart,product])
+                               localStorage.setItem('cart', JSON.stringify([...cart,product]))}}>Add to Cart</button>
                     </div>
                 </div>
             </div>

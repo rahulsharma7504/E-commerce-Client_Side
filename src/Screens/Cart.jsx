@@ -3,8 +3,9 @@ import { useAuth } from '../Context/Auth';
 import { useCart } from '../Context/CartContext';
 import axios from 'axios';
 import '../Styles/cart.css';
-
+import {useNavigate} from 'react-router-dom'
 const Cart = () => {
+    const navigate = useNavigate();
     const { cart, setCart } = useCart();
     const { auth } = useAuth();
 
@@ -19,20 +20,25 @@ const Cart = () => {
         try {
             console.log('Creating order with total price:', totalPrice);
             const orderResponse = await axios.post('http://localhost:4000/product/create-order', {
-                amount: totalPrice * 100, // Convert to smallest currency unit
-                currency: 'INR',
+                Amount: totalPrice * 100, // Convert to smallest currency unit
+                Currency: 'INR', // Convert to currency unit
+                UserID: auth.user._id,
+                Products: cart,
+                totalPrice: totalPrice,
+                Status: 'pending',
             });
-
+            
+    
             console.log('Order response:', orderResponse.data);
-
-            const { id: order_id, currency, amount } = orderResponse.data;
-
+    
+            const { id: order_id, currency, amount } = orderResponse.data.order;
+    
             const options = {
                 key: 'rzp_test_VntZm15bTqdhSc',
                 amount: amount,
                 currency: currency,
                 order_id: order_id,
-                name: 'Your Company Name',
+                name: 'R.Sharma Production',
                 description: 'Test Transaction',
                 handler: function (response) {
                     console.log('Payment successful:', response);
@@ -41,14 +47,15 @@ const Cart = () => {
                 prefill: {
                     name: auth.user.name,
                     email: auth.user.email,
-                    contact: '9999999999', // You can fetch user contact from your auth context or user data
+                    contact: auth.user.phone, // You can fetch user contact from your auth context or user data
                 },
                 theme: {
-                    color: '#3399cc',
+                    color: 'red',
                 },
             };
-
+    
             console.log('Opening Razorpay payment box with options:', options);
+    
             // Check if the window object is available and Razorpay script is loaded before creating a new instance of Razorpay
             if (typeof window !== 'undefined' && window.Razorpay) {
                 const rzp = new window.Razorpay(options);
@@ -56,10 +63,16 @@ const Cart = () => {
             } else {
                 console.error('Razorpay is not available in this environment.');
             }
+            if(orderResponse.data){
+                localStorage.removeItem('cart');
+                setCart([]);
+                navigate('user/dashboard')
+            }
         } catch (error) {
             console.error('Payment error:', error);
         }
     };
+    
 
     return (
         <>

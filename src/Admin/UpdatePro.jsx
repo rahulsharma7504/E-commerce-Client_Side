@@ -35,7 +35,7 @@ const UpdatePro = () => {
             const image = e.target.files[0];
             setSelectedimage(URL.createObjectURL(image));
             setProduct({ ...product, image });
-        }
+        }  
     };
 
 

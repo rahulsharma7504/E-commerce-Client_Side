@@ -83,6 +83,7 @@ const Layout = () => {
     try {
       const res = await axios.get(`http://localhost:4000/product/pagination?page=${page + 1}`);
       if (res.data.data.length === 0) {
+
         setHasMoreProducts(false);
       } else {
         setProduct(res.data.data);
@@ -160,10 +161,7 @@ const Layout = () => {
                           <p className="card-text">$ {item.price}</p>
                           <Tooltip title="Add to Cart" arrow>
                             <Button onClick={() => {setCart([...cart,item])
-                              localStorage.setItem('cart', JSON.stringify([...cart,item]))
-                            }
-                          
-                          }>
+                               localStorage.setItem('cart', JSON.stringify([...cart,item]))}}>
                                 <ShoppingCartIcon />
                             </Button>
                           </Tooltip>
