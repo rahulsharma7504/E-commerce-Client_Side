@@ -21,7 +21,7 @@ const CreateProduct = () => {
   useEffect(() => {
     getAllcategory();
     //  <getAllCategory setCategory={setCategory}/>
-  }, []);
+  }, [category]);
 
   const getAllcategory = async () => {
     try {
@@ -67,13 +67,13 @@ const CreateProduct = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      window.location.reload()
       console.log(res.data);
       Swal.fire({
         icon: 'success',
         title: 'Success!',
         text: 'Product Created Successfully'
       });
+      setData({name:'',price:'', quantity:'', description:'', image:'', shipping:false})
       // handle success response
     } catch (error) {
       if (error) {

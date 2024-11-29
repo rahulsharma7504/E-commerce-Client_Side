@@ -13,7 +13,7 @@ const ManageProduct = () => {
 
     const getAllProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:4000/product/all');
+            const res = await axios.get('http://localhost:4000/product/all-manage');
             if (res.status === 200 && res.data.Product.length > 0) {
                 // Set the first product from the API response
                 setProduct(res.data.Product);
@@ -32,27 +32,22 @@ const ManageProduct = () => {
             <div className="container-fluid product-container">
                 <div className="row">
                     {product.map((item, index) => (
-                        <div className="col-12 col-sm-6 col-md-4 col-lg-3 product-col" key={index}>
+                        <div className="col-md-4 col-sm-6" key={index}>
                             <NavLink to={`/admin/dashboard/update/${item._id}`} className="product-link">
-                                <Box className="product-box" maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-                                    <Image className="product-image" src={item.image} alt={item.name} />
-                                    <Box p="6">
-                                        <Box d="flex" alignItems="baseline">
-                                            <Text className="product-title" fontWeight="semibold" fontSize="lg" mr="2">
-                                                {item.name}
-                                            </Text>
-                                        </Box>
-                                        <Text className="product-description" mt="2" color="gray.600">
-                                            {item.description.substring(0,30)}
-                                        </Text>
-                                    </Box>
-                                </Box>
+                                <div className="card mb-4">
+                                    <img src={item.image} className="card-img-top product-image" alt={item.name} />
+                                    <div className="card-body">
+                                        <h5 className="card-title product-title">{item.name}</h5>
+                                        <p className="card-text product-description">
+                                            {item.description.substring(0, 30)}
+                                        </p>
+                                    </div>
+                                </div>
                             </NavLink>
                         </div>
                     ))}
                 </div>
             </div>
-
 
         </>
 

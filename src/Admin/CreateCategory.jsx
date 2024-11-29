@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import '../Styles/category.css'
+import CreateProduct from './CreateProduct'
 // import { getAllCategory } from './CreateProduct'
 
 const CreateCategory = () => {
@@ -110,8 +111,11 @@ const CreateCategory = () => {
 
     }
   }
+
   return (
+
     <>
+
       <div class="manage-categories-container">
         <h1>Manage Categories</h1>
         <div class="row d-flex manage-categories-section">

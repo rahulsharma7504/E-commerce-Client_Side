@@ -4,43 +4,61 @@ import { useCart } from '../Context/CartContext';
 import axios from 'axios';
 import '../Styles/cart.css';
 import {useNavigate} from 'react-router-dom'
+import Footer from '../Components/Footer';
 const Cart = () => {
     const navigate = useNavigate();
     const { cart, setCart } = useCart();
     const { auth } = useAuth();
 
-    const removeItem = (id) => {
-        const newCart = cart.filter(item => item._id !== id);
-        localStorage.setItem('cart', JSON.stringify(newCart));
-        setCart(newCart);
+    const removeItem = (id,index) => {
+        if(cart.length){
+            const newCart = [...cart];  
+            
+            newCart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(newCart));
+            setCart(newCart);
+        }
+        // localStorage.setItem('cart', JSON.stringify(newCart));
+        // setCart(newCart);
     };
+
+    // const newCart = cart.filter(item => item._id !== id);
 
     const handlePayment = async () => {
         const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
         try {
-            console.log('Creating order with total price:', totalPrice);
             const orderResponse = await axios.post('http://localhost:4000/product/create-order', {
-                Amount: totalPrice * 100, // Convert to smallest currency unit
-                Currency: 'INR', // Convert to currency unit
-                UserID: auth.user._id,
-                Products: cart,
-                totalPrice: totalPrice,
-                Status: 'pending',
+                amount: totalPrice * 100,
+                currency: 'INR'
             });
-            
-    
-            console.log('Order response:', orderResponse.data);
-    
-            const { id: order_id, currency, amount } = orderResponse.data.order;
-    
+
             const options = {
                 key: 'rzp_test_VntZm15bTqdhSc',
-                amount: amount,
-                currency: currency,
-                order_id: order_id,
+                amount: totalPrice*100,
+                currency: 'INR',
+                // order_id: order_id,
                 name: 'R.Sharma Production',
+                order_id: orderResponse.data.id,
                 description: 'Test Transaction',
-                handler: function (response) {
+                handler:async function (response) {
+                    try {
+                        await axios.post('http://localhost:4000/product/payment-verify', {
+                            paymentId: response.razorpay_payment_id,
+                            orderId: response.razorpay_order_id,
+                            signature: response.razorpay_signature,
+                            cart: cart,
+                            userID: auth.user._id,
+                            totalPrice: totalPrice,
+                            currency: 'INR',
+                            status: 'Booked',
+
+                        });
+                        console.log('Payment successful:', response);
+                        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+                    } catch (error) {
+                        console.error('Payment success handler error:', error);
+                        alert('Payment verification failed. Please contact support.');
+                    }
                     console.log('Payment successful:', response);
                     alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
                 },
@@ -58,16 +76,12 @@ const Cart = () => {
     
             // Check if the window object is available and Razorpay script is loaded before creating a new instance of Razorpay
             if (typeof window !== 'undefined' && window.Razorpay) {
-                const rzp = new window.Razorpay(options);
-                rzp.open();
+                const rzp = new window.Razorpay(options); //set Option data 
+                rzp.open(); // open the new instance of Razorpay with Default options and Details object
             } else {
                 console.error('Razorpay is not available in this environment.');
             }
-            if(orderResponse.data){
-                localStorage.removeItem('cart');
-                setCart([]);
-                navigate('user/dashboard')
-            }
+          
         } catch (error) {
             console.error('Payment error:', error);
         }
@@ -84,11 +98,11 @@ const Cart = () => {
                         {cart.length === 0 ? (
                             <h4 className="empty-cart-message">Your cart is empty</h4>
                         ) : (
-                            cart.map((item) => (
+                            cart.map((item,index) => (
                                 <div className="card cart-item-card" key={item._id}>
                                     <div className="card-body cart-item-body">
                                         <img src={item.image} alt={item.name} className="cart-item-image" />
-                                        <h5 className="card-title cart-item-title">{item.name}</h5>
+                                        <h5 className="card-title cart-item-title">{item.name.substring(0,25)}...  </h5>
                                         <p className="card-text cart-item-price">Price ${item.price}</p>
                                         <p className="card-text cart-item-description">
                                             {item.description.length > 40
@@ -97,7 +111,7 @@ const Cart = () => {
                                         </p>
                                         <button
                                             className="btn btn-danger cart-remove-btn"
-                                            onClick={() => removeItem(item._id)}
+                                            onClick={() => removeItem(item._id,index)}
                                         >
                                             Remove Item
                                         </button>
@@ -116,6 +130,7 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };

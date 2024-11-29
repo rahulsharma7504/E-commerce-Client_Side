@@ -115,79 +115,80 @@ const UpdatePro = () => {
         
         <h1>Update Product</h1>
 <hr />
-<div class="row">
-    <div class="col-md-6">
-        <form onSubmit={handleSubmit}>
-            <div class="form-group mb-2">
-                <label for='upload image'>Upload photo</label>
-                <input
-                    type="file"
-                    onChange={handleImageChange}
-                    class="form-control"
-                    placeholder={product.name}
-                />
-            </div>
-            <img class='img-fluid' width={'100px'} src={selectedImage ? selectedImage : product.image} alt="" />
-            <div class="form-group mb-2">
-                <label>Product Name</label>
-                <input
-                    value={product.name}
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter Product Name"
-                    onChange={(e) => { setProduct({ ...product, name: e.target.value }) }}
-                />
-            </div>
+<div className="row offset-md-3">
+  <div className="col-md-6 col-sm-8">
+    <form onSubmit={handleSubmit}>
+      <div className="form-group mb-2">
+        <label htmlFor="upload-image">Upload photo</label>
+        <input
+          type="file"
+          onChange={handleImageChange}
+          className="form-control"
+          placeholder={product.name}
+          id="upload-image"
+        />
+      </div>
+      <img className="img-fluid" width="100px" src={selectedImage ? selectedImage : product.image} alt="" />
 
-        </form>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group mb-2">
-            <label>Product Price</label>
-            <input
-                value={product.price}
-                type="text"
-                class="form-control"
-                placeholder="Enter Product Price"
-                onChange={(e) => { setProduct({ ...product, price: e.target.value }) }}
-            />
-        </div>
-        <div class="form-group mb-2">
-            <label>Product Description</label>
-            <input
-                value={product.description}
-                type="text"
-                class="form-control"
-                placeholder="Enter Product Description"
-                onChange={(e) => { setProduct({ ...product, description: e.target.value }) }}
-            />
-        </div>
+      <div className="form-group mb-2">
+        <label>Product Name</label>
+        <input
+          value={product.name}
+          type="text"
+          className="form-control"
+          placeholder="Enter Product Name"
+          onChange={(e) => { setProduct({ ...product, name: e.target.value }) }}
+        />
+      </div>
 
-    </div>
+      <div className="form-group mb-2">
+        <label>Product Price</label>
+        <input
+          value={product.price}
+          type="text"
+          className="form-control"
+          placeholder="Enter Product Price"
+          onChange={(e) => { setProduct({ ...product, price: e.target.value }) }}
+        />
+      </div>
+
+      <div className="form-group mb-2">
+        <label>Product Description</label>
+        <input
+          value={product.description}
+          type="text"
+          className="form-control"
+          placeholder="Enter Product Description"
+          onChange={(e) => { setProduct({ ...product, description: e.target.value }) }}
+        />
+      </div>
+
+      <div className="form-group mb-2">
+        <label>Product Quantity</label>
+        <input
+          value={product.quantity}
+          type="text"
+          className="form-control"
+          placeholder="Enter Product Quantity"
+          onChange={(e) => { setProduct({ ...product, quantity: e.target.value }) }}
+        />
+      </div>
+
+      <div className="form-group mb-2">
+        <label>Shipping</label>
+        <select className="form-control" onChange={(e) => { setProduct({ ...product, shipping: e.target.value }) }}>
+          <option value="True">True</option>
+          <option value="False">False</option>
+        </select>
+      </div>
+        <div className="col-md-6 d-flex">
+      <button type="submit" className="btn btn-success mx-2">Update Product</button><br />
+      <button type="button" className="btn btn-danger mx-2" onClick={handleDelete}>Delete Product</button>
+      </div>
+    </form>
+  </div>
 </div>
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="form-group mb-2">
-            <label>Product Quantity</label>
-            <input
-                value={product.quantity}
-                type="text"
-                class="form-control"
-                placeholder="Enter Product Quantity"
-                onChange={(e) => { setProduct({ ...product, quantity: e.target.value }) }}
-            />
-        </div>
-        <div class="form-group mb-2">
-            <label>Shipping</label>
-            <select name="" id="" class="form-control" onChange={(e) => { setProduct({ ...product, shipping: e.target.value }) }}>
-                <option value="True">True</option>
-                <option value="False">False</option>
-            </select>
-        </div>
-        <button type='submit' class='btn btn-success mx-2'>Update Product</button>
-        <button class='btn btn-danger mx-2' onClick={handleDelete}>Delete Product</button>
-    </div>
-</div>
+
 
         </>
     )

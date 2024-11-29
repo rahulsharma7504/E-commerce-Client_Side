@@ -3,6 +3,7 @@ import { useAuth } from '../Context/Auth';
 import { NavLink } from "react-router-dom";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react';
 import Allusers from './Allusers';
+import AllOrders from './AllOrders';
 import CreateCategory from './CreateCategory';
 import CreateProduct from './CreateProduct';
 import '../Styles/AdminDash.css';
@@ -21,7 +22,7 @@ const AdminDashboard = () => {
         <hr style={{ height: "3px" }} />
         <TabPanels>
           <TabPanel>
-            <Allusers />
+            <AllOrders />
           </TabPanel>
           <TabPanel>
             <CreateCategory />

@@ -4,11 +4,12 @@ import Swal from 'sweetalert2';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Button, Tooltip } from '@mui/material';
 import axios from 'axios';
+import Footer from './Footer'
 import '../Styles/Home.css';
 import { Prices } from './Prices';
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../Context/CartContext'
-
+import image from './Banner.jpg';
 const Layout = () => {
   const { cart, setCart } = useCart();
   const navigate = useNavigate();
@@ -100,6 +101,9 @@ const Layout = () => {
   }
   return (
     <>
+      <div className="banner">
+        <img src={image} width="100%"  height="250rem" alt="Banner" className="banner-image" />
+      </div>
       <div className="container-filtter">
         <div className="row">
           <div className="col-sm-3 m-3">
@@ -156,7 +160,7 @@ const Layout = () => {
                       <div className="card">
                         <img src={item.image} className="card-img-top" alt="..." />
                         <div className="card-body">
-                          <h5 className="card-title">{item.name}</h5>
+                          <h5 className="card-title">{item.name.substring(0,25)}</h5>
                           <p className="card-text">{item.description.substring(0, 20)}</p>
                           <p className="card-text">$ {item.price}</p>
                           <Tooltip title="Add to Cart" arrow>
@@ -175,9 +179,15 @@ const Layout = () => {
                 })
               }
               {hasMoreProducts ? (
-                <button className="btn btn-secondary float-right" onClick={nextPage}>
-                  Next..
-                </button>
+                <div className="row">
+                  <div className="col-3">
+                    <button className="btn btn-secondary" onClick={nextPage}>
+                      Next..
+                    </button>
+                  </div>
+                </div>
+               
+                
               ) : (
                 <p>No more products to show.</p>
               )}
@@ -186,13 +196,12 @@ const Layout = () => {
         </div>
       </div>
 
+      <Footer/>
 
     </>
+    
   );
 };
 
 export default Layout;
 
-const prices = [
-
-]

@@ -6,7 +6,6 @@ import Layout from './Components/Layout';
 import About from './Screens/About';
 import Contect from './Screens/Contect';
 import Header from './Components/Header';
-import Footer from './Components/Footer';
 import Register from './Screens/Register';
 import Login from './Screens/Login';
 import { useAuth } from './Context/Auth';
@@ -61,7 +60,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-      {/* <Footer /> */}
 
     </>
   );

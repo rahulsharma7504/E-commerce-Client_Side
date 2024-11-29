@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
 import '../Styles/login.css'; // Import CSS file
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
@@ -30,64 +29,63 @@ const Login = () => {
   });
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    const res = await axios.post('http://localhost:4000/user/login', { formData: formData });
-    if (res.data) {
+    try {
+      const res = await axios.post('http://localhost:4000/user/login', { formData: formData });
+      if (res.data) {
+        Toast.fire({
+          icon:'success',
+          title: 'Login Successful'
+        })
+        const { token, user } = res.data
+        setAuth({ ...auth, token, user });
+        localStorage.setItem('auth', JSON.stringify(res.data,res.data.user.password=''))
+        navigate('/');
+       
+  
+      }
+      
+    } catch (error) {
+      console.log(error)
       Toast.fire({
-        icon:'success',
-        title: 'Login Successful'
+        icon:'error',
+        title: 'Login Failed'
       })
-      const { token, user } = res.data
-      setAuth({ ...auth, token, user });
-      localStorage.setItem('auth', JSON.stringify(res.data,res.data.user.password=''))
-      navigate('/');
-     
-
+      
     }
+    // Add your login logic here
+   
   };
 
   return (
-    <Container maxWidth="xs" className="login-container">
-      <Typography variant="h4" align="center" gutterBottom>
-        Login
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField style={{marginBottom:'5px'}}
-          variant="outlined"
-          label="Email"
-          fullWidth
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <TextField style={{marginBottom:'5px'}}
-          variant="outlined"
-          label="Password"
-          type="password"
-          fullWidth
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <Button type="submit" variant="contained" color="primary" fullWidth className="login-button">
-          Login
-        </Button>
-        <Typography variant="body2" align="center" gutterBottom>
-          Don't have an account? <NavLink to="/register">Register</NavLink>
-        </Typography>
-        <Typography variant="body2" align="center" gutterBottom>
-          Forgot Password? <NavLink to="/forget">Forget Password</NavLink>
-        </Typography>
-      </form>
-    </Container>
+    <div class="login-container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <h4 class="login-title">Login</h4>
+        <form class="login-form" onSubmit={handleSubmit}>
+          <div class="form-group">
+            <input type="email" class="form-control login-input" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control login-input" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-login">Login</button>
+          </div>
+          <p class="text-center mb-3 login-links">Don't have an account? <NavLink to="/register">Register</NavLink></p>
+          <p class="text-center login-links">Forgot Password? <NavLink to="/forget">Forget Password</NavLink></p>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+  
   );
 };
 

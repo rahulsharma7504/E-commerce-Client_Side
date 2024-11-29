@@ -35,7 +35,7 @@ const Category = () => {
                     <div className="product-cards" key={index}>
                         <img src={item.image} className="product-image" alt="..." />
                         <div className="product-detail">
-                            <h5 className="product-titles">{item.name}</h5>
+                            <h5 className="product-titles">{item.name.substring(0,30)}.....</h5>
                             <p className="product-descriptions">{item.description.substring(0, 20)}</p>
                             <p className="product-prices">$ {item.price}</p>
                             <div className="product-action">

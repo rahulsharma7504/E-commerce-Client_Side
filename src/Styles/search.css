@@ -12,7 +12,31 @@
     margin-bottom: 20px;
     padding: 10px;
   }
+  .searchBox{
+    height: 30px;
+    border: 2px solid transparent;
+    border-radius: 30px;
+  }
+  .searchButton{
+    border: none;
+    margin-left: 8px;
+    border-radius: 10px;
+    background-color: aqua;
+    font-weight: bold;
+    font-size: 19px;
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    outline: none;
+    }
+   .searchButton:hover{
+      background-color: #050504;
+      color: white;
+    }
+.cartIcon{
+  font-size: 18px;
+  margin-right: 8px;
+  color: #f0ebe8;
   
+}
   /* Search Result Description */
   .search-result-description {
     overflow: hidden;
@@ -46,3 +70,20 @@
     font-size: 18px;
     margin-right: 8px;
   } 
+
+  .form-select{
+    border-radius: 20px;
+    border: none;
+    color: #050504;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    outline: none;
+    padding: 8px 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #f2f2f2;
+    
+
+  }

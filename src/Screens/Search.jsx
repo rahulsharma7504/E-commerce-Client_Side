@@ -18,13 +18,13 @@ const Search = () => {
   const [searchData, setSearchData] = useState([])
 
   useEffect(() => {
-    if(Search.length > 0) {
+    if(Search) {
       getSearchData()
     }
   },[Search])
 
   const getSearchData = async () => {
-    const res = await axios.get(`http://localhost:4000/product/search/${Search}`)
+    const res = await axios.get(`http://localhost:4000/product/search/${search}`)
     if (res.data) {
       setSearchData(res.data.data)
     }
