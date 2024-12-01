@@ -1,78 +1,105 @@
-import usePagination from '@mui/material/usePagination/usePagination'
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Button, Tooltip } from '@mui/material';
-import { useCart } from '../Context/CartContext'
-import '../Styles/search.css';
-
-import { useSearch } from '../Context/Search'
-
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'; // Cart icon
+import { Button, Box, Image, Text, SimpleGrid, useToast } from '@chakra-ui/react';
+import { useCart } from '../Context/CartContext';
+import { useSearch } from '../Context/Search';
 const Search = () => {
-  const navigate=useNavigate();
-  const { cart, setCart } = useCart();
-
-  const {Search,setSearch}=useSearch();
-  const { search } = useParams()
-  const [searchData, setSearchData] = useState([])
+  const navigate = useNavigate();
+  const { cart, setCart } = useCart();  
+  const { Search, setSearch } = useSearch();
+  const { search } = useParams();
+  const [searchData, setSearchData] = useState([]);
+  const toast = useToast();
 
   useEffect(() => {
-    if(Search) {
-      getSearchData()
+    if (Search) {
+      getSearchData();
     }
-  },[Search])
+  }, [Search]);
 
   const getSearchData = async () => {
-    const res = await axios.get(`http://localhost:4000/product/search/${search}`)
-    if (res.data) {
-      setSearchData(res.data.data)
+    try {
+      const res = await axios.get(`http://localhost:4000/product/search/${search}`);
+      if (res.data) {
+        setSearchData(res.data.data);
+      }
+    } catch (error) {
+      toast({
+        title: 'Error fetching data',
+        description: 'There was an error fetching search results.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  }
-  
-  const handleMore=(id)=>{
+  };
+
+  const handleMore = (id) => {
     navigate(`/details/${id}`);
-  }
+  };
+
+  const handleAddToCart = (item) => {
+    setCart([...cart, item]);
+    localStorage.setItem('cart', JSON.stringify([...cart, item]));
+    toast({
+      title: 'Item added to cart',
+      description: `${item.name} has been added to your cart.`,
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+  };
 
   return (
     <>
-    {Search.length===0 ?(
-      <>
-      <h3>No result found</h3>
-      </>
-    ):(
-      <div className="containerFlex">
-      <div className="row">
-      <h3 className="search-results-heading">Search Results</h3>
-  {searchData.map((item, index) => {
-    return (
-      <div className="col-md-6  search-result-item" key={index}>
-        <div className="card">
-          <img src={item.image} className="card-img-top" alt="..." />
-          <div className="card-body">
-            <h5 className="card-title">{item.name}</h5>
-            <p className="card-text search-result-description">{item.description.substring(0, 20)}</p>
-            <p className="card-text search-result-price">$ {item.price}</p>
-            <Tooltip title="Add to Cart" arrow>
-              <Button className="add-to-cart-btn"onClick={() => {setCart([...cart,item])
-                 localStorage.setItem('cart', JSON.stringify([...cart,item]))} }>
-                <ShoppingCartIcon className="cart-icon" />
-              </Button>
-            </Tooltip>
-            <Button variant='danger' onClick={()=>{handleMore(item._id)}}>More..</Button>
+      {Search.length === 0 ? (
+        <Text fontSize="xl" textAlign="center" mt={8}>No result found</Text>
+      ) : (
+        <Box mt={8}>
+          <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="center">Search Results</Text>
+          <SimpleGrid columns={[1, 2, 3]} spacing={4}>
+            {searchData.map((item, index) => (
+              <Box
+                key={index}
+                borderWidth="2px"
+                borderRadius="md"
+                overflow="hidden"
+                p={4}
+                bg="white"
+                boxShadow="sm"
+              >
+                <Image src={item.image} alt={item.name} boxSize="100%" objectFit="cover" />
+                <Text fontSize="lg" fontWeight="bold" mt={4} isTruncated>
+                  {item.name}
+                </Text>
+                <Text fontSize="sm" color="gray.600" isTruncated>
+                  {item.description.substring(0, 20)}
+                </Text>
+                <Text fontSize="md" color="green.500" fontWeight="semibold" mt={2}>
+                  {/* ${item.price} */}
+                </Text>
+                <Box display="flex" justifyContent="space-between" mt={4}>
+                <FontAwesomeIcon icon={faShoppingCart} size="2x" />
+                  <Button 
+                    colorScheme="teal"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    Add to Cart
+                  </Button>
+                  <Button variant="link" colorScheme="blue" onClick={() => handleMore(item._id)}>
+                    More...
+                  </Button>
+                </Box>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Box>
+      )}
+    </>
+  );
+};
 
-          </div>
-        </div>
-      </div>
-    );
-  })}
-      </div>
-  </div>
-    )}
-   
-   
-  </>
-  )
-}
-
-export default Search
+export default Search;

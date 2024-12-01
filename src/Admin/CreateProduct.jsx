@@ -3,10 +3,12 @@ import { Select } from "@chakra-ui/react";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import '../Styles/product.css'
+import { useCategoryContext } from '../Context/CategoryContext';
 const CreateProduct = () => {
-  const [category, setCategory] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const [selectedImage, setSelectedImage] = useState(null); // State to store selected image file
+
+const {category,getAllcategory}=useCategoryContext()
 
   const [data, setData] = useState({
     name: '',
@@ -18,26 +20,9 @@ const CreateProduct = () => {
     shipping: ''
   });
 
-  useEffect(() => {
-    getAllcategory();
-    //  <getAllCategory setCategory={setCategory}/>
-  }, [category]);
+  
 
-  const getAllcategory = async () => {
-    try {
-      const res = await axios.get('http://localhost:4000/category/all');
-      setCategory(res.data.Category);
-    } catch (error) {
-      if (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!'
-        });
-      }
-      console.log(error);
-    }
-  };
+  
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
@@ -214,19 +199,4 @@ const CreateProduct = () => {
 };
 
 export default CreateProduct;
-// const getAllCategory = async (axios, Swal ,{setCategory}) => {
-//   try {
-//     const res = await axios.get('http://localhost:4000/category/all');
-//     setCategory(res.data.Category);
-//   } catch (error) {
-//     if (error) {
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Oops...',
-//         text: 'Something went wrong!'
-//       });
-//     }
-//     console.log(error);
-//   }
-// };
-// export { getAllCategory }
+

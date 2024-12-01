@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import '../Styles/login.css'; // Import CSS file
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useAuth } from '../Context/Auth';
-import Swal from 'sweetalert2'
-
+import { Box, Button, Container, FormControl, FormLabel, Input, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const Toast = Swal.mixin({
@@ -18,18 +18,12 @@ const Login = () => {
       toast.onmouseleave = Swal.resumeTimer;
     }
   });
-  const { auth, setAuth } = useAuth();
-  const navigate = useNavigate()
-  const [tokenData, setTokenData] = useState('')
-  const [user, setuser] = useState('')
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {
-
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -40,52 +34,90 @@ const Login = () => {
       const res = await axios.post('http://localhost:4000/user/login', { formData: formData });
       if (res.data) {
         Toast.fire({
-          icon:'success',
+          icon: 'success',
           title: 'Login Successful'
-        })
-        const { token, user } = res.data
+        });
+        const { token, user } = res.data;
         setAuth({ ...auth, token, user });
-        localStorage.setItem('auth', JSON.stringify(res.data,res.data.user.password=''))
+        localStorage.setItem('auth', JSON.stringify(res.data, res.data.user.password = ''));
         navigate('/');
-       
-  
       }
-      
     } catch (error) {
-      console.log(error)
+      console.log(error);
       Toast.fire({
-        icon:'error',
+        icon: 'error',
         title: 'Login Failed'
-      })
-      
+      });
     }
-    // Add your login logic here
-   
   };
 
   return (
-    <div class="login-container">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <h4 class="login-title">Login</h4>
-        <form class="login-form" onSubmit={handleSubmit}>
-          <div class="form-group">
-            <input type="email" class="form-control login-input" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control login-input" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-login">Login</button>
-          </div>
-          <p class="text-center mb-3 login-links">Don't have an account? <NavLink to="/register">Register</NavLink></p>
-          <p class="text-center login-links">Forgot Password? <NavLink to="/forget">Forget Password</NavLink></p>
-        </form>
-        
-      </div>
-    </div>
-  </div>
-  
+    <Container maxW="lg" p={4} centerContent>
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Box bg="white" p={8} boxShadow="lg" borderRadius="md" width="full">
+          <Text fontSize="2xl" fontWeight="bold" textAlign="center" mb={6}>
+            Login
+          </Text>
+          
+          <form onSubmit={handleSubmit}>
+            <VStack spacing={4} align="stretch">
+              <FormControl isRequired>
+                <FormLabel htmlFor="email">Email Address</FormLabel>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  focusBorderColor="teal.500"
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  focusBorderColor="teal.500"
+                />
+              </FormControl>
+
+              <Button
+                type="submit"
+                colorScheme="teal"
+                size="lg"
+                width="full"
+                _hover={{ bg: 'teal.600' }}
+              >
+                Login
+              </Button>
+            </VStack>
+          </form>
+
+          <Text fontSize="sm" textAlign="center" mt={4}>
+            Don't have an account?{' '}
+            <NavLink to="/register" style={{ color: '#3182ce' }}>
+              Register
+            </NavLink>
+          </Text>
+          <Text fontSize="sm" textAlign="center">
+            Forgot Password?{' '}
+            <NavLink to="/forget" style={{ color: '#3182ce' }}>
+              Forget Password
+            </NavLink>
+          </Text>
+        </Box>
+      </motion.div>
+    </Container>
   );
 };
 

@@ -1,26 +1,29 @@
-import React from 'react'
-import {Button,Typography} from '@mui/material';
+import React from 'react';
+import { Button, Heading, Text, Box } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
+
 const NotFound = () => {
   return (
-    <>
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <Typography variant="h1" gutterBottom>
+    <Box textAlign="center" mt="50px">
+      <Heading as="h1" size="4xl" mb={4}>
         404
-      </Typography>
-      <Typography variant="h5" gutterBottom>
+      </Heading>
+      <Heading as="h5" size="lg" mb={4}>
         Page Not Found
-      </Typography>
-      <Typography variant="body1" gutterBottom>
+      </Heading>
+      <Text fontSize="xl" mb={4}>
         The page you are looking for does not exist.
-      </Typography>
-      <Button variant="contained" color="primary" component={NavLink} to="/">
+      </Text>
+      <Button 
+        colorScheme="blue" 
+        variant="solid" 
+        as={NavLink} 
+        to="/login"
+      >
         Go to Home Page
       </Button>
-    </div>
-      
-    </>
-  )
-}
+    </Box>
+  );
+};
 
-export default NotFound
+export default NotFound;

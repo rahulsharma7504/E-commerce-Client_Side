@@ -1,61 +1,76 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useNavigate } from 'react-router-dom'
-import '../Styles/categories.css';
-import { Button, Tooltip } from '@mui/material';
-import { useCart } from '../Context/CartContext'
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../Context/CartContext';
+import { Button, Box, Text, Image, Stack, Tooltip, IconButton, useBreakpointValue } from '@chakra-ui/react';
+import { ArrowBackIcon} from '@chakra-ui/icons';
 
 const Category = () => {
   const { cart, setCart } = useCart();
+  const navigate = useNavigate();
+  const { id, name } = useParams();
+  const [Products, setProducts] = useState([]);
+  
+  useEffect(() => {
+    getAllProducts();
+  }, [id]);
 
-    const navigate = useNavigate();
+  const getAllProducts = async () => {
+    const res = await axios(`http://localhost:4000/product/category/${id}`);
+    setProducts(res.data.data);
+  };
 
-    const { id, name } = useParams();
-    const [Products, setProducts] = useState([])
-    useEffect(() => {
-        getAllProducts();
-    }, [id]);
-    const getAllProducts = async () => {
-        const res = await axios(`http://localhost:4000/product/category/${id}`)
-        setProducts(res.data.data)
-    }
+  const handleMore = (id) => {
+    navigate(`/details/${id}`);
+  };
 
-    const handleMore = (id) => {
-        navigate(`/details/${id}`);
-    }
-    return (
-        <>
-            <h3>Category: {name}</h3>
-            <h4>Total: {Products.length}</h4>
+  return (
+    <Box p={5}>
+      <Text fontSize="2xl" fontWeight="bold" mb={4}>Category: {name}</Text>
+      <Text fontSize="lg" color="gray.600" mb={6}>Total: {Products.length}</Text>
 
-            <div className="product-container">
-                {Products.map((item, index) => (
-                    <div className="product-cards" key={index}>
-                        <img src={item.image} className="product-image" alt="..." />
-                        <div className="product-detail">
-                            <h5 className="product-titles">{item.name.substring(0,30)}.....</h5>
-                            <p className="product-descriptions">{item.description.substring(0, 20)}</p>
-                            <p className="product-prices">$ {item.price}</p>
-                            <div className="product-action">
-                                <Tooltip title="Add to Cart" arrow>
-                                    <Button onClick={() => {setCart([...cart,item])
-                               localStorage.setItem('cart', JSON.stringify([...cart,item]))}}>
-                                        <ShoppingCartIcon />
-                                    </Button>
-                                </Tooltip>
-                                <Button variant='danger' onClick={() => { handleMore(item._id) }}>More..</Button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+      <Box display="grid" gridTemplateColumns={{ base: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' }} gap={6}>
+        {Products.map((item, index) => (
+          <Box
+            key={index}
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="lg"
+            overflow="hidden"
+            boxShadow="md"
+            p={4}
+            bg="white"
+            _hover={{ boxShadow: 'lg' }}
+          >
+            <Image src={item.image} alt={item.name} w="full" h="auto" objectFit="cover" borderRadius="lg" mb={4} />
+            <Stack spacing={3}>
+              <Text fontSize="lg" fontWeight="bold" noOfLines={1}>{item.name}</Text>
+              <Text color="gray.500" noOfLines={2}>{item.description}</Text>
+              <Text fontWeight="semibold" fontSize="xl">${item.price}</Text>
 
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Tooltip label="Add to Cart" aria-label="Add to Cart Tooltip">
+                  <IconButton
+                    icon={<ArrowBackIcon />}
+                    onClick={() => {
+                      setCart([...cart, item]);
+                      localStorage.setItem('cart', JSON.stringify([...cart, item]));
+                    }}
+                    colorScheme="teal"
+                    variant="outline"
+                    aria-label="Add to Cart"
+                  />
+                </Tooltip>
 
+                <Button colorScheme="blue" variant="outline" onClick={() => handleMore(item._id)}>More..</Button>
+              </Box>
+            </Stack>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+};
 
-        </>
-    )
-}
-
-export default Category
+export default Category;

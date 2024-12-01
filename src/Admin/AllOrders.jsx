@@ -8,7 +8,7 @@ const AllOrders = () => {
     useEffect(() => {
         getUsers();
 
-    })
+    },[])
     const getUsers = async () => {
         try {
             const res = await axios.get(`http://localhost:4000/user/all-users?role=0`);

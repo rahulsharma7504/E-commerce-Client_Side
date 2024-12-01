@@ -1,77 +1,48 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import Swal from 'sweetalert2'
-import '../Styles/category.css'
-import CreateProduct from './CreateProduct'
-// import { getAllCategory } from './CreateProduct'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useCategoryContext } from '../Context/CategoryContext';
+import { Input, Button, Box, Text, Table, Thead, Tbody, Tr, Th, Td, IconButton, Flex, Spacer, useDisclosure, Tooltip } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; 
 
 const CreateCategory = () => {
-  const [category, setCategory] = useState([])
-  const [name, setName] = useState('')
-  const [inputValue, setInputValue] = useState('')
-  useEffect(() => {
-    getAllcategory()
-  }, [])
-
-  const getAllcategory = async () => {
-    try {
-      const res = await axios.get('http://localhost:4000/category/all')
-      console.log(res.data.Category)
-      setCategory(res.data.Category)
-    } catch (error) {
-      if (error)
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!'
-        })
-      console.log(error)
-    }
-  }
-
+  const [name, setName] = useState('');
+  const { category, getAllcategory } = useCategoryContext();
+  
   const handelAdd = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/category/create', { name: name })
+      const res = await axios.post('http://localhost:4000/category/create', { name });
       if (res.data) {
-        getAllcategory()
-        // await getAllCategory(axios,Swal)
+        getAllcategory();
         Swal.fire({
           icon: 'success',
           title: 'Category Added Successfully',
           text: 'Category Added Successfully'
-        })
-        setName('')
-        // window.location.reload()
+        });
+        setName(''); // Clear the input field
       }
     } catch (error) {
-      if (error)
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!'
-        })
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong while adding the category!'
+      });
     }
-  }
+  };
 
-
-  const handleOpenModal = async (id) => {
-    const open = await Swal.fire({
+  const handleOpenModal = async (id, currentName) => {
+    const { value: editedName } = await Swal.fire({
       title: "Edit Category",
       input: "text",
-      placeholder: "Category Name",
       inputLabel: "Category Name",
-      inputValue: inputValue, // Set the input value to the category name
+      inputValue: currentName,
       showCancelButton: true,
-      inputValidator: (value) => {
-        if (!value) {
-          return "You need to write something!";
-        }
-      }
+      inputValidator: (value) => !value && "You need to write something!",
     });
 
-    if (open.isConfirmed) {
-      const editedName = open.value;
+    if (editedName) {
       try {
         await axios.put(`http://localhost:4000/category/update/${id}`, { name: editedName });
         getAllcategory();
@@ -83,99 +54,106 @@ const CreateCategory = () => {
       } catch (error) {
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
+          title: 'Error',
           text: 'Something went wrong while updating the category!'
         });
       }
     }
   };
 
-  //delete category
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:4000/category/delete/${id}`)
-      getAllcategory()
+      await axios.delete(`http://localhost:4000/category/delete/${id}`);
+      getAllcategory();
       Swal.fire({
         icon: 'success',
         title: 'Category Deleted Successfully',
         text: 'Category Deleted Successfully'
-      })
-
-
+      });
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!'
-      })
-
+        title: 'Error',
+        text: 'Something went wrong while deleting the category!'
+      });
     }
-  }
+  };
 
   return (
+    <Box p={5} bg="gray.50" borderRadius="md" boxShadow="lg">
+      <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="center">Manage Categories</Text>
 
-    <>
+      {/* Add Category Form */}
+      <Flex direction={{ base: 'column', sm: 'row' }} mb={6} justify="center" align="center">
+        <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Add New Category"
+          size="lg"
+          mb={{ base: 3, sm: 0 }}
+          mr={3}
+          borderColor="teal.400"
+          _hover={{ borderColor: "teal.500" }}
+        />
+        <Button
+          colorScheme="teal"
+          size="lg"
+          onClick={handelAdd}
+          isDisabled={!name}
+          _hover={{ bg: "teal.600" }}
+        >
+          Add Category
+        </Button>
+      </Flex>
 
-      <div class="manage-categories-container">
-        <h1>Manage Categories</h1>
-        <div class="row d-flex manage-categories-section">
-          <div class="col-4 add-category-section">
-            <form onSubmit={handelAdd} class="add-category-form">
-              <input
-                type="text"
-                name="category"
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Add New Category"
-                class="add-category-input"
-              />
-              <button type="submit" class="btn btn-primary mt-2 p-3 add-category-btn">
-                Add Category
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div class="category-table-section">
-        <table class="table manage-categories-table">
-          <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Category Name</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
+      {/* Categories Table */}
+      <Box overflowX="auto">
+        <Table variant="striped" colorScheme="teal">
+          <Thead>
+            <Tr>
+              <Th>No</Th>
+              <Th>Category Name</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {category.map((item, index) => (
-              <tr key={index} class="category-row">
-                <th scope="row">{index + 1}</th>
-                <td>{item.name}</td>
-                <td>
-                  <div className='edbtn'>
-
-                  <button
-                    class="btn btn-danger mx-2 delete-category-btn"
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    class="btn btn-primary edit-category-btn"
-                    onClick={() => handleOpenModal(item._id, setInputValue(item.name))}
-                  >
-                    EDIT
-                  </button>
-                  </div>
-
-                </td>
-              </tr>
+              <Tr key={item._id}>
+                <Td>{index + 1}</Td>
+                <Td>{item.name}</Td>
+                <Td>
+                  <Flex justify="flex-start" gap={3}>
+                    <Tooltip label="Edit Category" fontSize="md" placement="top">
+                      <IconButton
+                        colorScheme="blue"
+                        icon={<FontAwesomeIcon icon={faEdit} />}
+                        onClick={() => handleOpenModal(item._id, item.name)}
+                        size="sm"
+                        aria-label="Edit Category"
+                        variant="outline"
+                        _hover={{ bg: "blue.50" }}
+                      />
+                    </Tooltip>
+                    <Tooltip label="Delete Category" fontSize="md" placement="top">
+                      <IconButton
+                        colorScheme="red"
+                        icon={<FontAwesomeIcon icon={faTrash} />}
+                        onClick={() => handleDelete(item._id)}
+                        size="sm"
+                        aria-label="Delete Category"
+                        variant="outline"
+                        _hover={{ bg: "red.50" }}
+                      />
+                    </Tooltip>
+                  </Flex>
+                </Td>
+              </Tr>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </Tbody>
+        </Table>
+      </Box>
+    </Box>
+  );
+};
 
-    </>
-  )
-}
-
-export default CreateCategory
+export default CreateCategory;

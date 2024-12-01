@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography, Container } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Box, Button, FormControl, FormLabel, Input, Container, Text, useBreakpointValue } from '@chakra-ui/react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import '../Styles/register.css'
 const RegisterForm = () => {
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -15,7 +13,8 @@ const RegisterForm = () => {
     phone: '',
     address: '',
   });
-  document.title = 'Register -E-Commerce'
+
+  document.title = 'Register - E-Commerce';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,73 +23,113 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(formData){
-      if(!formData.name){
-        alert('Name is required')
-        return
-      }
-      if(!formData.email){
-        alert('Email is required')
-        return
-      }
-      if(!formData.password){
-        alert('Password is required')
-        return
-      }
-      if(!formData.phone){
-        alert('Phone is required')
-        return
-      }
-      if(!formData.address){
-        alert('Address is required')
-        return
-      }
+    // Validate form fields
+    if (!formData.name || !formData.email || !formData.password || !formData.phone || !formData.address) {
+      alert('All fields are required');
+      return;
     }
+
     // Add your registration logic here
-    const res = await axios.post('http://localhost:4000/user/register', { formData: formData });
+    const res = await axios.post('http://localhost:4000/user/register', { formData });
     if (res.data) {
-      alert('User Registered successfully')
+      alert('User Registered successfully');
       navigate('/login');
-
     }
-
   };
 
   return (
-    <div class="background-animation">
-  <div class="register-container">
-    <div class="register-container">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <h4 class="register-title text-center mb-4">Register</h4>
-          <form class="register-form" onSubmit={handleSubmit}>
-            <div class="form-group">
-              <input type="text" class="form-control register-input" placeholder="Name" name="name" value={formData.name} onChange={handleChange} />
-            </div>
-            <div class="form-group">
-              <input type="email" class="form-control register-input" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control register-input" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control register-input" placeholder="Phone" name="phone" value={formData.phone} onChange={handleChange} />
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control register-input" placeholder="Address" name="address" value={formData.address} onChange={handleChange} />
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-register btn-block">Register</button>
-            </div>
-            <p class="text-center mb-3 login-links">Already have an account? <NavLink to="/login">Login Here</NavLink></p>
-            <p class="text-center login-links">Forgot Password? <NavLink to="/forget">Forget Password</NavLink></p>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
-    </div>
+    <Container maxW="lg" py={8}>
+      <Box
+        borderWidth={1}
+        borderRadius="lg"
+        boxShadow="lg"
+        p={6}
+        bg="white"
+        width="100%"
+        maxWidth="500px"
+        mx="auto"
+      >
+        <Text textAlign="center" fontSize="2xl" fontWeight="bold" mb={4}>Register</Text>
+        <form onSubmit={handleSubmit}>
+          <FormControl isRequired mb={4}>
+            <FormLabel htmlFor="name">Name</FormLabel>
+            <Input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+          </FormControl>
 
+          <FormControl isRequired mb={4}>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+          </FormControl>
+
+          <FormControl isRequired mb={4}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+            />
+          </FormControl>
+
+          <FormControl isRequired mb={4}>
+            <FormLabel htmlFor="phone">Phone</FormLabel>
+            <Input
+              type="text"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter your phone number"
+            />
+          </FormControl>
+
+          <FormControl isRequired mb={4}>
+            <FormLabel htmlFor="address">Address</FormLabel>
+            <Input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Enter your address"
+            />
+          </FormControl>
+
+          <Button colorScheme="teal" type="submit" width="100%" mb={4}>
+            Register
+          </Button>
+        </form>
+
+        <Text textAlign="center">
+          Already have an account?{' '}
+          <NavLink to="/login" style={{ color: '#319795', fontWeight: 'bold' }}>
+            Login Here
+          </NavLink>
+        </Text>
+        <Text textAlign="center">
+          Forgot Password?{' '}
+          <NavLink to="/forget" style={{ color: '#319795', fontWeight: 'bold' }}>
+            Forget Password
+          </NavLink>
+        </Text>
+      </Box>
+    </Container>
   );
 };
 

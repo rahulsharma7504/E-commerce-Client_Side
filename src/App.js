@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Routes, Navigate } from 'react-router-dom';
-import './App.css';
 import NotFound from './Components/NotFound';
 import Layout from './Components/Layout';
 import About from './Screens/About';
-import Contect from './Screens/Contect';
 import Header from './Components/Header';
 import Register from './Screens/Register';
 import Login from './Screens/Login';
@@ -22,12 +20,14 @@ import Search from './Screens/Search';
 import ProDetails from './Screens/ProDetails';
 import Category from './Screens/Category';
 import Cart from './Screens/Cart';
+import { CategoryProvider } from './Context/CategoryContext';
 function App() {
   const { auth, setAuth } = useAuth();
 
   return (
     <>
       <Router>
+        <CategoryProvider>
         <Header />
         <Routes>
           {auth.token ? (
@@ -59,6 +59,7 @@ function App() {
           )}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </CategoryProvider>
       </Router>
 
     </>
