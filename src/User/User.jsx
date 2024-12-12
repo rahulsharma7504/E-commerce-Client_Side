@@ -42,7 +42,7 @@ const User = () => {
 
     try {
       // Update user data in the database
-      const res = await axios.put(`${process.env.SERVER_URL}/user/profile`, { formData });
+      const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/profile`, { formData });
 
       if (res.data) {
         let user = JSON.parse(localStorage.getItem('auth'));

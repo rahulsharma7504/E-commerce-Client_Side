@@ -17,7 +17,7 @@ const ResetPass = () => {
     const token = urlSearchParams.get('token');
 
     try {
-      const res = await axios.post(`${process.env.SERVER_URL}/user/reset_pass?token=${token}`, { password: pass });
+      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/reset_pass?token=${token}`, { password: pass });
       if (res.data) {
         Swal.fire({
           icon: 'success',

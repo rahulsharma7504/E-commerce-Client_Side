@@ -20,13 +20,13 @@ const ProDetails = () => {
   }, [id]);
 
   const getProduct = async () => {
-    const res = await axios.get(`${process.env.SERVER_URL}/product/single/${id}`);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/product/single/${id}`);
     setProduct(res.data.product);
     similarProduct(res.data.product._id, res.data.product.category);
   };
 
   const similarProduct = async (pid, cid) => {
-    const res = await axios.get(`${process.env.SERVER_URL}/product/similar/${pid}/${cid}`);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/product/similar/${pid}/${cid}`);
     if (res.data.similarProducts) {
       setSimilar(res.data.similarProducts);
     }

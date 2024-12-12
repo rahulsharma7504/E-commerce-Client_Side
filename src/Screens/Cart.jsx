@@ -23,7 +23,7 @@ const Cart = () => {
   const handlePayment = async () => {
     const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
     try {
-      const orderResponse = await axios.post(`${process.env.SERVER_URL}/product/create-order`, {
+      const orderResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/product/create-order`, {
         amount: totalPrice * 100,
         currency: 'INR',
       });
@@ -37,7 +37,7 @@ const Cart = () => {
         description: 'Test Transaction',
         handler: async function (response) {
           try {
-            await axios.post(`${process.env.SERVER_URL}/product/payment-verify`, {
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/product/payment-verify`, {
               paymentId: response.razorpay_payment_id,
               orderId: response.razorpay_order_id,
               signature: response.razorpay_signature,

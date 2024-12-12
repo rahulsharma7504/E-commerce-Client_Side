@@ -17,7 +17,7 @@ const Category = () => {
   }, [id]);
 
   const getAllProducts = async () => {
-    const res = await axios(`${process.env.SERVER_URL}/product/category/${id}`);
+    const res = await axios(`${process.env.REACT_APP_SERVER_URL}/product/category/${id}`);
     setProducts(res.data.data);
   };
 
@@ -47,7 +47,7 @@ const Category = () => {
             <Stack spacing={3}>
               <Text fontSize="lg" fontWeight="bold" noOfLines={1}>{item.name}</Text>
               <Text color="gray.500" noOfLines={2}>{item.description}</Text>
-              <Text fontWeight="semibold" fontSize="xl">${item.price}</Text>
+              <Text fontWeight="semibold" fontSize="xl">{item.price}</Text>
 
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Tooltip label="Add to Cart" aria-label="Add to Cart Tooltip">

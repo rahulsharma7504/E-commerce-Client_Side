@@ -29,7 +29,7 @@ const RegisterForm = () => {
     }
 
     // Add your registration logic here
-    const res = await axios.post(`${process.env.SERVER_URL}/user/register`, { formData });
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/register`, { formData });
     if (res.data) {
       alert('User Registered successfully');
       navigate('/login');

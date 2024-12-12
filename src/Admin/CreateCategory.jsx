@@ -13,7 +13,7 @@ const CreateCategory = () => {
   const handelAdd = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.SERVER_URL}/category/create`, { name });
+      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/category/create`, { name });
       if (res.data) {
         getAllcategory();
         Swal.fire({
@@ -44,7 +44,7 @@ const CreateCategory = () => {
 
     if (editedName) {
       try {
-        await axios.put(`${process.env.SERVER_URL}/category/update/${id}`, { name: editedName });
+        await axios.put(`${process.env.REACT_APP_SERVER_URL}/category/update/${id}`, { name: editedName });
         getAllcategory();
         Swal.fire({
           icon: 'success',
@@ -63,7 +63,7 @@ const CreateCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.SERVER_URL}/category/delete/${id}`);
+      await axios.delete(`${process.env.REACT_APP_SERVER_URL}/category/delete/${id}`);
       getAllcategory();
       Swal.fire({
         icon: 'success',

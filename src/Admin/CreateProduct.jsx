@@ -47,7 +47,7 @@ const {category,getAllcategory}=useCategoryContext()
     formData.append('categoryId', data.categoryId);
     formData.append('shipping', data.shipping);
     try {
-      const res = await axios.post(`${process.env.SERVER_URL}/product/create`, formData, {
+      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/product/create`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

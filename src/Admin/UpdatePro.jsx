@@ -24,7 +24,7 @@ const UpdatePro = () => {
         getSingleProduct()
     }, [])
     const getSingleProduct = async () => {
-        const res = await axios.get(`${process.env.SERVER_URL}/product/single/${id}`)
+        const res = await axios.get(`${process.env.REACT_APP_REACT_APP_SERVER_URL}/product/single/${id}`)
         setProduct(res.data.product)
     }
 
@@ -52,7 +52,7 @@ const UpdatePro = () => {
         formData.append('category', product.category);
         formData.append('shipping', product.shipping);
         try {
-            const res = await axios.put(`${process.env.SERVER_URL}/product/update/${id}`, formData, {
+            const res = await axios.put(`${process.env.REACT_APP_REACT_APP_SERVER_URL}/product/update/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -82,7 +82,7 @@ const UpdatePro = () => {
 
     const handleDelete = async () => {
         try {
-            const res = await axios.delete(`${process.env.SERVER_URL}/product/delete/${id}`);
+            const res = await axios.delete(`${process.env.REACT_APP_REACT_APP_SERVER_URL}/product/delete/${id}`);
             console.log(res.data);
             if (res.data) {
                 Swal.fire({

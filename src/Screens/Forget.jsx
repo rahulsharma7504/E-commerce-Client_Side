@@ -11,7 +11,7 @@ const Forget = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${process.env.SERVER_URL}/user/forget`, { email });
+      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/forget`, { email });
       console.log(res.data);
       Swal.fire({
         title: 'Success!',

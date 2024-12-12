@@ -13,7 +13,7 @@ const ManageProduct = () => {
 
     const getAllProducts = async () => {
         try {
-            const res = await axios.get(`${process.env.SERVER_URL}/product/all-manage`);
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/product/all-manage`);
             if (res.status === 200 && res.data.Product.length > 0) {
                 // Set the first product from the API response
                 setProduct(res.data.Product);

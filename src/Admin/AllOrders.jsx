@@ -11,7 +11,7 @@ const AllOrders = () => {
     },[])
     const getUsers = async () => {
         try {
-            const res = await axios.get(`http://localhost:4000/user/all-users?role=0`);
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/all-users?role=0`);
             setUsers(res.data.users);
         } catch (error) {
             console.log(error);
@@ -32,7 +32,7 @@ const AllOrders = () => {
             });
 
             if (result.isConfirmed) {
-                const res = await axios.delete(`${process.env.SERVER_URL}/user/delete-user/${id}`);
+                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user/delete-user/${id}`);
 
                 if (res.status === 200) {
                     Swal.fire(
