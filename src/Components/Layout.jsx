@@ -33,7 +33,7 @@ const Layout = () => {
 
   const getAllcategory = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/category/all');
+      const res = await axios.get(`${process.env.SERVER_URL}/category/all`);
       setCategory(res.data.Category);
     } catch (error) {
       if (error) {
@@ -48,7 +48,7 @@ const Layout = () => {
 
   const getAllProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/product/all');
+      const res = await axios.get(`${process.env.SERVER_URL}/product/all`);
       if (res.status === 200 && res.data.Product.length > 0) {
         setProduct(res.data.Product);
       }
@@ -59,7 +59,7 @@ const Layout = () => {
 
   const filterproducts = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/product/filter', { checked, radio });
+      const res = await axios.post(`${process.env.SERVER_URL}/product/filter`, { checked, radio });
       setProduct(res.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -79,7 +79,7 @@ const Layout = () => {
 
   const nextPage = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/product/pagination?page=${page + 1}`);
+      const res = await axios.get(`${process.env.SERVER_URL}/product/pagination?page=${page + 1}`);
       if (res.data.data.length === 0) {
         setHasMoreProducts(false);
       } else {

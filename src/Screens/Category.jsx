@@ -17,7 +17,7 @@ const Category = () => {
   }, [id]);
 
   const getAllProducts = async () => {
-    const res = await axios(`http://localhost:4000/product/category/${id}`);
+    const res = await axios(`${process.env.SERVER_URL}/product/category/${id}`);
     setProducts(res.data.data);
   };
 

@@ -20,13 +20,13 @@ const ProDetails = () => {
   }, [id]);
 
   const getProduct = async () => {
-    const res = await axios.get(`http://localhost:4000/product/single/${id}`);
+    const res = await axios.get(`${process.env.SERVER_URL}/product/single/${id}`);
     setProduct(res.data.product);
     similarProduct(res.data.product._id, res.data.product.category);
   };
 
   const similarProduct = async (pid, cid) => {
-    const res = await axios.get(`http://localhost:4000/product/similar/${pid}/${cid}`);
+    const res = await axios.get(`${process.env.SERVER_URL}/product/similar/${pid}/${cid}`);
     if (res.data.similarProducts) {
       setSimilar(res.data.similarProducts);
     }
@@ -100,7 +100,7 @@ const ProDetails = () => {
                   borderRadius="md"
                 />
                 <Text mt={2} fontWeight="semibold">{item.name}</Text>
-                <Text mt={1}>Price: ${item.price}</Text>
+                <Text mt={1}>Price: {item.price}</Text>
                 <Button
                   colorScheme="teal"
                   size="sm"

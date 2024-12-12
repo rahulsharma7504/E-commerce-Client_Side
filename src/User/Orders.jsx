@@ -11,7 +11,7 @@ const Orders = () => {
 
   const getAllBooking = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/user/bookings');
+      const res = await axios.get(`${process.env.SERVER_URL}/user/bookings`);
       setBookings(res.data.Bookings);
     } catch (error) {
       console.error('Error fetching bookings:', error);

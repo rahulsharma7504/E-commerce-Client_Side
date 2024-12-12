@@ -14,7 +14,7 @@ export const CategoryProvider = ({children}) => {
     },[])
     const getAllcategory = async () => {
         try {
-          const res = await axios.get('http://localhost:4000/category/all')
+          const res = await axios.get(`${process.env.SERVER_URL}/category/all`)
           setCategory(res.data.Category)
         } catch (error) {
           if (error)

@@ -23,7 +23,7 @@ const Search = () => {
 
   const getSearchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/product/search/${search}`);
+      const res = await axios.get(`${process.env.SERVER_URL}/product/search/${search}`);
       if (res.data) {
         setSearchData(res.data.data);
       }

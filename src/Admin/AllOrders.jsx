@@ -32,7 +32,7 @@ const AllOrders = () => {
             });
 
             if (result.isConfirmed) {
-                const res = await axios.delete(`http://localhost:4000/user/delete-user/${id}`);
+                const res = await axios.delete(`${process.env.SERVER_URL}/user/delete-user/${id}`);
 
                 if (res.status === 200) {
                     Swal.fire(

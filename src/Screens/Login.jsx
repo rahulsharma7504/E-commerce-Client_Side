@@ -31,7 +31,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/user/login', { formData: formData });
+      const res = await axios.post(`${process.env.SERVER_URL}/user/login`, { formData: formData });
       if (res.data) {
         Toast.fire({
           icon: 'success',
