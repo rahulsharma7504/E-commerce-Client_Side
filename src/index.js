@@ -4,19 +4,21 @@ import App from './App';
 import { AuthProvider } from './Context/Auth';
 import { SearchProvider } from './Context/Search'
 import { CartProvider } from './Context/CartContext';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, ThemeProvider } from '@chakra-ui/react';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
-  <AuthProvider>
+    <AuthProvider>
       <CartProvider>
-      <SearchProvider>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
-      </SearchProvider>
+        <SearchProvider>
+          <ChakraProvider>
+
+              <App />
+
+          </ChakraProvider>
+        </SearchProvider>
       </CartProvider>
-      
+
     </AuthProvider>
   </>
 );

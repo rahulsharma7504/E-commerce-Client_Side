@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../Context/Auth';
-import { Grid, TextField, Button, Container } from '@mui/material';
+import {
+  Box,
+  Input,
+  Button,
+  Container,
+  VStack,
+  FormControl,
+  FormLabel,
+  Heading,
+  useToast,
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import '../Styles/Dash.css';
 import axios from 'axios';
 
 const User = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
+  const toast = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -35,14 +45,15 @@ const User = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // Update user data in the database
-      const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/profile`, { formData });
+      const res = await axios.put(
+        `${process.env.REACT_APP_SERVER_URL}/user/profile`,
+        { formData }
+      );
 
       if (res.data) {
         let user = JSON.parse(localStorage.getItem('auth'));
@@ -60,88 +71,86 @@ const User = () => {
     } catch (error) {
       console.error('Error updating profile:', error);
 
-      Swal.fire({
+      toast({
         title: 'Error',
-        text: 'Failed to update profile. Please try again later.',
-        icon: 'error',
-        showConfirmButton: true,
+        description: 'Failed to update profile. Please try again later.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
       });
     }
   };
 
-  document.title = 'Profile'
+  document.title = 'Profile';
+
   return (
-    <>
-      <h1>User</h1>
-      <Container maxWidth="sm" className="register-container">
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-              className='TextField'
-                variant="outlined"
-                label="Name"
-                fullWidth
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              className='TextField'
-                variant="outlined"
-                label="Email"
-                fullWidth
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                disabled
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              className='TextField'
-                variant="outlined"
-                label="Password"
-                type="password"
-                fullWidth
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              className='TextField'
-                variant="outlined"
-                label="Phone"
-                fullWidth
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              className='TextField'
-                variant="outlined"
-                label="Address"
-                fullWidth
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary" fullWidth className="register-button">
-                Update
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Container>
-    </>
+    <Container maxW="md" py={8}>
+      <Heading as="h1" size="lg" mb={6} textAlign="center">
+        User Profile
+      </Heading>
+      <Box as="form" onSubmit={handleSubmit} bg="white" p={6} rounded="md" shadow="md">
+        <VStack spacing={4}>
+          <FormControl id="name" isRequired>
+            <FormLabel>Name</FormLabel>
+            <Input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+          </FormControl>
+
+          <FormControl id="email" isDisabled>
+            <FormLabel>Email</FormLabel>
+            <Input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+          </FormControl>
+
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <Input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter a new password"
+            />
+          </FormControl>
+
+          <FormControl id="phone">
+            <FormLabel>Phone</FormLabel>
+            <Input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter your phone number"
+            />
+          </FormControl>
+
+          <FormControl id="address">
+            <FormLabel>Address</FormLabel>
+            <Input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Enter your address"
+            />
+          </FormControl>
+
+          <Button type="submit" colorScheme="teal" w="full">
+            Update
+          </Button>
+        </VStack>
+      </Box>
+    </Container>
   );
 };
 
