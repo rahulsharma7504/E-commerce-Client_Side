@@ -1,0 +1,157 @@
+/* General Header Styling */
+header {
+  background-color: #1f3559; /* Dark Blue background for the header */
+  padding: 10px 20px; /* Padding for spacing */
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+header .nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Mobile Menu Styling */
+@media (max-width: 768px) {
+  header .nav-links {
+    display: none; /* Hide navigation on mobile */
+  }
+
+  header .search-container {
+    width: 80%; /* Ensure the search bar is centered on mobile */
+    margin: 0 auto;
+  }
+
+  header .hamburger-icon {
+    display: block;
+  }
+}
+
+/* Hamburger Menu Styling */
+.hamburger-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+  }
+  .drawer-body {
+    background-color: #1f3559;
+  }
+
+  .drawer-body a {
+    color: white;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+  }
+
+  .drawer-footer {
+    background-color: #1f3559;
+    color: white;
+  }
+
+  .drawer-close-btn {
+    color: white;
+  }
+}
+
+/* Button Styling */
+button {
+  background-color: #1f3559;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #163d54; /* Slightly darker shade on hover */
+}
+
+button:active {
+  background-color: #0c2d40; /* Darker shade on active click */
+}
+
+/* Search Bar Styling */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.search-container button {
+  background-color: #1f3559;
+  color: white;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #163d54;
+}
+
+.search-container button:active {
+  background-color: #0c2d40;
+}
+
+/* Cart Badge Styling */
+.cart-badge {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  background-color: #163d54;
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+/* Drawer (Mobile Menu) Styling */
+.drawer-body {
+  background-color: #1f3559;
+  color: white;
+}
+
+.drawer-body a {
+  color: white;
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drawer-body a:hover {
+  background-color: #163d54;
+}
+
+.drawer-footer {
+  background-color: #1f3559;
+  color: white;
+}

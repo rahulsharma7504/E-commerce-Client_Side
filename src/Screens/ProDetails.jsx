@@ -6,6 +6,7 @@ import {
   Box, Button, Container, Grid, GridItem, Image, Text, VStack, useBreakpointValue
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import '../Styles/product.css'; // Import external CSS for custom styling
 
 const ProDetails = () => {
   const { cart, setCart } = useCart();
@@ -36,28 +37,25 @@ const ProDetails = () => {
   };
 
   return (
-    <Container maxW="7xl" p={4}>
+    <Container maxW="7xl" p={4} className="product-container">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}>
-          <GridItem>
+          <GridItem className="product-image">
             <Image
               src={product.image}
               alt={product.name}
-              objectFit="cover"
-              borderRadius="md"
-              boxSize="100%"
             />
           </GridItem>
-          <GridItem>
+          <GridItem className="product-info">
             <VStack align="stretch" spacing={4}>
               <Text fontSize="2xl" fontWeight="bold">{product.name}</Text>
-              <Text fontSize="xl">Price: ${product.price}</Text>
+              <Text fontSize="xl" className="product-price">Price: ${product.price}</Text>
               <Text fontSize="md">
-                Shipping: <strong>{product.shipping ? 'Available' : 'Un-Available'}</strong>
+                Shipping: <strong>{product.shipping ? 'Available' : 'Unavailable'}</strong>
               </Text>
               <Text fontSize="md">
                 Quantity: <strong>{product.quantity}</strong>
@@ -81,6 +79,7 @@ const ProDetails = () => {
                   localStorage.setItem('cart', JSON.stringify([...cart, product]));
                 }}
                 mt={4}
+                className="add-to-cart-btn"
               >
                 Add to Cart
               </Button>
@@ -88,11 +87,11 @@ const ProDetails = () => {
           </GridItem>
         </Grid>
 
-        <Box mt={8}>
+        <Box mt={8} className="similar-products">
           <Text fontSize="2xl" fontWeight="bold" mb={4}>Similar Products</Text>
           <Grid templateColumns={{ base: '1fr', sm: '1fr 1fr', md: 'repeat(3, 1fr)' }} gap={6}>
             {similar.map((item) => (
-              <GridItem key={item._id} p={4} border="1px" borderColor="gray.200" borderRadius="md">
+              <GridItem key={item._id} p={4} border="1px" borderColor="gray.200" borderRadius="md" className="similar-item">
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -107,6 +106,7 @@ const ProDetails = () => {
                   size="sm"
                   onClick={() => handleSimilar(item._id)}
                   mt={2}
+                  className="view-details-btn"
                 >
                   View Details
                 </Button>

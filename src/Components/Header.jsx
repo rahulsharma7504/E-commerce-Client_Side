@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Text, Input, Button, Badge, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, IconButton } from '@chakra-ui/react';
+import { Box, Text, Input, Button, Badge, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, IconButton, Container } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/Auth';
 import Swal from 'sweetalert2';
@@ -63,8 +63,8 @@ const Header = () => {
   return (
     <>
       {/* Main Header */}
-      <Box as="header" width="100%" bg="teal.500" p={4}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
+      <Box as="header" width="100%" bg="#1f3559" p={4}>
+        <Container maxW="container.xl" display="flex" justifyContent="space-between" alignItems="center">
           {/* Logo and Title */}
           <Text fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }} color="white" fontWeight="bold">
             E-Commerce APP
@@ -79,11 +79,12 @@ const Header = () => {
             aria-label="Menu"
           />
 
-          {/* Desktop Search and Navigation */}
-          <Box display={{ base: 'none', md: 'flex' }} alignItems="center" flexWrap="wrap" justifyContent="center">
+          {/* Search and Navigation */}
+          <Box display={{ base: 'none', md: 'flex' }} justifyContent="center" alignItems="center" width="50%" flexDirection="row" gap={4}>
             {auth.token ? (
               <>
-                <Box display="flex" flexDirection={{ base: 'column', sm: 'row' }} mb={{ base: 2, sm: 0 }}>
+                {/* Search Bar */}
+                <Box display="flex" width="100%" justifyContent="center">
                   <Input
                     type="search"
                     onChange={(e) => {
@@ -92,71 +93,78 @@ const Header = () => {
                     }}
                     color={'Black'}
                     placeholder="Search Products"
-                    variant={'dashed'}
+                    variant={'outline'}
                     className="searchBox"
-                    mr={{ sm: 2 }}
-                    mb={{ base: 1, sm: 0 }}
+                    width="80%"
+                    mr={2}
                   />
-                  <Button className="searchButton" onClick={handleSearch} mb={{ base: 1, sm: 0 }} color={'blue'}>
+                  <Button
+                    onClick={handleSearch}
+                    color={'white'}
+                    bg="teal.600"
+                    _hover={{ bg: 'teal.500' }}
+                    width="20%"
+                  >
                     Search
                   </Button>
                 </Box>
 
                 {/* Navigation buttons */}
-                <Box display="flex" flexDirection={{ base: 'column', sm: 'row' }} justifyContent="center">
-                  <NavLink to="/" style={{ color: 'white' }} mb={{ base: 1, sm: 0 }}>
-                    <Button color="black" mx={2}>Home</Button>
+                <Box display="flex" alignItems="center" gap={4}>
+                  <NavLink to="/" style={{ color: 'white' }}>
+                    <Button color="black">Home</Button>
                   </NavLink>
 
-                  {auth.user.role === 1 ? (
-                    <NavLink to="/admin/dashboard" style={{ color: 'white' }} mb={{ base: 1, sm: 0 }}>
-                      <Button color="black" mx={2}>Admin</Button>
+                  {auth.user?.role === 1 ? (
+                    <NavLink to="/admin/dashboard" style={{ color: 'white' }}>
+                      <Button color="black">Admin</Button>
                     </NavLink>
                   ) : (
-                    <NavLink to="/user/dashboard" style={{ color: 'white' }} mb={{ base: 1, sm: 0 }}>
-                      <Button color="black" mx={2}>User</Button>
+                    <NavLink to="/user/dashboard" style={{ color: 'white' }}>
+                      <Button color="black">User</Button>
                     </NavLink>
                   )}
-                  <NavLink to="/login" style={{ color: 'white' }} mb={{ base: 1, sm: 0 }}>
-                    <Button color="black" mx={2} onClick={logout}>
+
+                  <NavLink to="/login" style={{ color: 'white' }}>
+                    <Button color="black" onClick={logout}>
                       Logout
                     </Button>
                   </NavLink>
 
-                  <NavLink to="/cart" mb={{ base: 1, sm: 0 }} style={{ color: 'white' }}>
+                  <NavLink to="/cart" style={{ color: 'white' }}>
                     <FontAwesomeIcon color="green" icon={faShoppingCart} size="2x" />
                     <Badge ml={2} colorScheme="blue">{cart.length}</Badge>
                   </NavLink>
                 </Box>
               </>
             ) : (
-              <Box display="flex" flexDirection={{ base: 'column', sm: 'row' }}>
-                <NavLink to="/register" style={{ color: 'white' }} mb={{ base: 1, sm: 0 }}>
+              <Box display="flex" alignItems="center" gap={4}>
+                <NavLink to="/register" style={{ color: 'white' }}>
                   <Button color="inherit">Register</Button>
                 </NavLink>
-                <NavLink to="/login" style={{ color: 'white' }} mb={{ base: 1, sm: 0 }}>
+                <NavLink to="/login" style={{ color: 'white' }}>
                   <Button color="inherit">Login</Button>
                 </NavLink>
               </Box>
             )}
           </Box>
-        </Box>
+        </Container>
       </Box>
 
       {/* Mobile Drawer/Slider */}
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent bg={'gray'}>
+        <DrawerContent bg={'gray.600'}>
           <DrawerCloseButton />
-          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerHeader color="white">Menu</DrawerHeader>
 
-          <DrawerBody bg={'gray'}>
+          <DrawerBody bg={'gray.600'}>
             {auth.token ? (
               <>
                 <NavLink to="/" style={{ display: 'block', marginBottom: '10px' }}>
                   <Button color="black">Home</Button>
                 </NavLink>
-                {auth.user.role === 1 ? (
+                {auth.user?.role === 1 ? (
                   <NavLink to="/admin/dashboard" style={{ display: 'block', marginBottom: '10px' }}>
                     <Button color="black">Admin</Button>
                   </NavLink>

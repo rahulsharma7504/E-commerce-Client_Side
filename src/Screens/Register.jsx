@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, Container, Text, useBreakpointValue } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import '../Styles/register.css'
 const RegisterForm = () => {
   const navigate = useNavigate();
 
@@ -38,98 +37,95 @@ const RegisterForm = () => {
   };
 
   return (
-    <Container maxW="lg" py={8}>
-      <Box
-        borderWidth={1}
-        borderRadius="lg"
-        boxShadow="lg"
-        p={6}
-        bg="white"
-        width="100%"
-        maxWidth="500px"
-        mx="auto"
-      >
-        <Text textAlign="center" fontSize="2xl" fontWeight="bold" mb={4}>Register</Text>
-        <form onSubmit={handleSubmit}>
-          <FormControl isRequired mb={4}>
-            <FormLabel htmlFor="name">Name</FormLabel>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-            />
-          </FormControl>
+    <div className="container my-5">
+      <div className="card shadow-lg mx-auto" style={{ maxWidth: '500px' }}>
+        <div className="card-body">
+          <h2 className="card-title text-center mb-4">Register</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Name</label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+                required
+              />
+            </div>
 
-          <FormControl isRequired mb={4}>
-            <FormLabel htmlFor="email">Email</FormLabel>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
-          </FormControl>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-          <FormControl isRequired mb={4}>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-            />
-          </FormControl>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
 
-          <FormControl isRequired mb={4}>
-            <FormLabel htmlFor="phone">Phone</FormLabel>
-            <Input
-              type="text"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-            />
-          </FormControl>
+            <div className="mb-3">
+              <label htmlFor="phone" className="form-label">Phone</label>
+              <input
+                type="text"
+                className="form-control"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter your phone number"
+                required
+              />
+            </div>
 
-          <FormControl isRequired mb={4}>
-            <FormLabel htmlFor="address">Address</FormLabel>
-            <Input
-              type="text"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Enter your address"
-            />
-          </FormControl>
+            <div className="mb-3">
+              <label htmlFor="address" className="form-label">Address</label>
+              <input
+                type="text"
+                className="form-control"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Enter your address"
+                required
+              />
+            </div>
 
-          <Button colorScheme="teal" type="submit" width="100%" mb={4}>
-            Register
-          </Button>
-        </form>
+            <button type="submit" className="btn btn-primary w-100 mb-4">Register</button>
+          </form>
 
-        <Text textAlign="center">
-          Already have an account?{' '}
-          <NavLink to="/login" style={{ color: '#319795', fontWeight: 'bold' }}>
-            Login Here
-          </NavLink>
-        </Text>
-        <Text textAlign="center">
-          Forgot Password?{' '}
-          <NavLink to="/forget" style={{ color: '#319795', fontWeight: 'bold' }}>
-            Forget Password
-          </NavLink>
-        </Text>
-      </Box>
-    </Container>
+          <p className="text-center">
+            Already have an account?{' '}
+            <NavLink to="/login" className="text-primary font-weight-bold">Login Here</NavLink>
+          </p>
+          <p className="text-center">
+            Forgot Password?{' '}
+            <NavLink to="/forget" className="text-primary font-weight-bold">Forget Password</NavLink>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

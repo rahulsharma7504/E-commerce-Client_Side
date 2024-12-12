@@ -3,8 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useAuth } from '../Context/Auth';
-import { Box, Button, Container, FormControl, FormLabel, Input, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import '../Styles/login.css'
 
 const Login = () => {
   const Toast = Swal.mixin({
@@ -52,72 +52,60 @@ const Login = () => {
   };
 
   return (
-    <Container maxW="lg" p={4} centerContent>
+    <div className="container my-5">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Box bg="white" p={8} boxShadow="lg" borderRadius="md" width="full">
-          <Text fontSize="2xl" fontWeight="bold" textAlign="center" mb={6}>
-            Login
-          </Text>
-          
-          <form onSubmit={handleSubmit}>
-            <VStack spacing={4} align="stretch">
-              <FormControl isRequired>
-                <FormLabel htmlFor="email">Email Address</FormLabel>
-                <Input
+        <div className="card shadow-lg mx-auto" style={{ maxWidth: '500px' }}>
+          <div className="card-body">
+            <h2 className="card-title text-center mb-4">Login</h2>
+
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">Email Address</label>
+                <input
                   type="email"
+                  className="form-control"
                   id="email"
                   name="email"
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
-                  focusBorderColor="teal.500"
+                  required
                 />
-              </FormControl>
+              </div>
 
-              <FormControl isRequired>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <Input
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">Password</label>
+                <input
                   type="password"
+                  className="form-control"
                   id="password"
                   name="password"
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
-                  focusBorderColor="teal.500"
+                  required
                 />
-              </FormControl>
+              </div>
 
-              <Button
-                type="submit"
-                colorScheme="teal"
-                size="lg"
-                width="full"
-                _hover={{ bg: 'teal.600' }}
-              >
-                Login
-              </Button>
-            </VStack>
-          </form>
+              <button type="submit" className="btn btn-primary w-100">Login</button>
+            </form>
 
-          <Text fontSize="sm" textAlign="center" mt={4}>
-            Don't have an account?{' '}
-            <NavLink to="/register" style={{ color: '#3182ce' }}>
-              Register
-            </NavLink>
-          </Text>
-          <Text fontSize="sm" textAlign="center">
-            Forgot Password?{' '}
-            <NavLink to="/forget" style={{ color: '#3182ce' }}>
-              Forget Password
-            </NavLink>
-          </Text>
-        </Box>
+            <p className="mt-3 text-center">
+              Don't have an account?{' '}
+              <NavLink to="/register" className="text-primary">Register</NavLink>
+            </p>
+            <p className="text-center">
+              Forgot Password?{' '}
+              <NavLink to="/forget" className="text-primary">Forget Password</NavLink>
+            </p>
+          </div>
+        </div>
       </motion.div>
-    </Container>
+    </div>
   );
 };
 
